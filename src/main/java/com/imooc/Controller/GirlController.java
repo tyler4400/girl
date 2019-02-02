@@ -1,15 +1,18 @@
 package com.imooc.Controller;
 
-import com.imooc.Girl;
-import com.imooc.GirlRepository;
-import com.imooc.GirlService;
+import com.imooc.domain.Girl;
+import com.imooc.repository.GirlRepository;
+import com.imooc.service.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -37,14 +40,11 @@ public class GirlController {
 
     /**
      * 添加\更新一个女生
-     * @param cupSize
-     * @param age
      * @return
      */
     @PostMapping(value = "/addGirl")
-    public Girl girlAdd(@RequestParam(value = "id", required = false) Integer id, @RequestParam("cupSize") String cupSize, @RequestParam("age") Integer age){
-        Girl girl = new Girl(cupSize, age);
-        if (id != null) girl.setId(id);
+    public Girl girlAdd(@Valid Girl girl, BindingResult br){
+        if(br.hasErrors()) System.out.println(Objects.requireNonNull(br.getFieldError()).getDefaultMessage());
         return this.girlRepository.save(girl);
 
     }
