@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "girl")
 public class GirlProperties {
     private String cipSize;
+    private Integer age;
+
 
     public String getCipSize() {
         return cipSize;
@@ -27,6 +29,4 @@ public class GirlProperties {
     public void setAge(Integer age) {
         this.age = age;
     }
-
-    private Integer age;
 }
